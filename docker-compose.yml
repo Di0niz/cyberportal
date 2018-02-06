@@ -1,0 +1,59 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
+  db1:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./pg1:/var/lib/postgresql/data
+
+  db2:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./pg2:/var/lib/postgresql/data
+
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 5050:8080
+
+  nodejs:
+    build: ./nodejs
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./nodejs/app:/app
+    ports:
+      - 3000:3000
+      - 35729:35729
+    command: yarn start
+
+  
+
+  #react-kickstart:
+   #  image: react-kickstart
+   #volumes:
+   #  - ./react-kickstart:/app
+   #  ports:
+   #   - "3000:3000"
+
+    #command: bash -c "npm install -g create-react-app && create-react-app redux && cd redux && npm start"
+    #command: bash -c "npm install --save babel-preset-react"
+    #command: bash -c "node server.js"
+    #command: npm start
