@@ -2,46 +2,47 @@ version: '2'
 
 services:
 
-  mpg1:
-    image: centos/postgresql-96-centos7
+
+  msql1:
+    image: mysql
     restart: always
     environment:
-      POSTGRESQL_ADMIN_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example
     volumes:
-      - ./mpg1:/var/lib/pgsql/data
+      - ./msql1:/var/lib/mysql
     networks:
       vpcbr:
         ipv4_address: 192.168.101.11
 
-  mpg2:
-    image: centos/postgresql-96-centos7
+  msql2:
+    image: mysql
     restart: always
     environment:
-      POSTGRESQL_ADMIN_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example
     volumes:
-      - ./mpg2:/var/lib/pgsql/data
+      - ./msql2:/var/lib/mysql
     networks:
       vpcbr:
         ipv4_address: 192.168.101.12
 
-  spg1:
-    image: centos/postgresql-96-centos7
+  ssql1:
+    image: mysql
     restart: always
     environment:
-      POSTGRESQL_ADMIN_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example
     volumes:
-      - ./spg1:/var/lib/pgsql/data
+      - ./ssql1:/var/lib/mysql  
     networks:
       vpcbr:
         ipv4_address: 192.168.101.21
 
-  spg2:
-    image: centos/postgresql-96-centos7
+  ssql2:
+    image: mysql
     restart: always
     environment:
-      POSTGRESQL_ADMIN_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example
     volumes:
-      - ./spg2:/var/lib/pgsql/data
+      - ./ssql2:/var/lib/mysql
     networks:
       vpcbr:
         ipv4_address: 192.168.101.22
