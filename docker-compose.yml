@@ -2,6 +2,14 @@ version: '2'
 
 services:
 
+  backend:
+    build: ./golang
+    restart: always
+    ports:
+      - 8001:8080
+#    networks:
+#      vpcbr:
+#        ipv4_address: 192.168.101.200
 
   msql1:
     image: mysql
@@ -69,14 +77,25 @@ services:
     networks:
       - vpcbr
 
+  jenkins:
+    image: jenkins:alpine
+    restart: always
+    ports:
+      - 6000:8080
+    volumes:
+      - ./jenkins:/var/jenkins_home
+    networks:
+      - vpcbr
+
 
 networks:
   vpcbr:
     driver: bridge
     ipam:
-     config:
-       - subnet: 192.168.101.0/16
-         gateway: 192.168.101.1
+      driver: default
+      config:
+        - subnet: 192.168.101.0/16
+          gateway: 192.168.101.1/16
          
          
 # networks:
