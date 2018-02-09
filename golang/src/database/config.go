@@ -1,22 +1,25 @@
-package main
+package github.com/Di0niz/cyber-backend/database
+
 import (
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 
+	_ "github.com/go-sql-driver/mysql"
 )
 
-type DBPool struct{
-	Connections [4]DatabaseConnection
+// определяем список баз данных для подключения
+type DBPool struct {
+	Connections []*DatabaseParam
 }
 
+// параметр подключения к базе данных
 type DatabaseParam struct {
-	DB *sql.DB
+	DB       *sql.DB
 	IsMaster bool
-	IsLive	 bool
-	Dns		 string
+	IsLive   bool
+	Dns      string
 }
 
-func InitializeDatabase() * DBPool {
+func InitializeDatabase() *DBPool {
 
 	dnslist := []string{
 		"root:example@tcp(192.168.101.11:3306)/cybergame?&charset=utf8&interpolateParams=true",
@@ -27,32 +30,23 @@ func InitializeDatabase() * DBPool {
 	pool := &DBPool{}
 
 	IsMaster := true
-	for _, dns:= range dnslist {
-		db, err := sql.Open("mysql", dsn)
+	for _, dns := range dnslist {
 
-		db.SetMaxOpenConns(10)
-
-		
-
-		param := &DatabaseParam {
-			DB: 		db, 
-			IsMaster: 	IsMaster,
-			IsLive:	 	db.Ping() == nil,
-			Dns	:	 	dns,
+		db, err := sql.Open("mysql", dns)
+		if err != nil {
+			db.SetMaxOpenConns(20)
+		}
+		param := &DatabaseParam{
+			DB:       db,
+			IsMaster: IsMaster,
+			IsLive:   db.Ping() == nil,
+			Dns:      dns,
 		}
 
-		append(pool.Connections, )
+		pool.Connections = append(pool.Connections, param)
 
 		IsMaster = !IsMaster
-
-
 	}
 
-	return &Database{[
-		{
-			DB: 
-		}, 
-	]}
-
-
+	return pool
 }

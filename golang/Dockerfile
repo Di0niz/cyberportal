@@ -13,7 +13,7 @@ CMD if [ ${APP_ENV} = production ]; \
 	then \
 	app; \
 	else \
-	go get github.com/pilu/fresh && \
+	go get github.com/pilu/fres h && \
 	fresh; \
 	fi
 	

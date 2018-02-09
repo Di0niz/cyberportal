@@ -5,8 +5,11 @@ services:
   backend:
     build: ./golang
     restart: always
+    working_dir: /go/src/github.com/Di0niz/cyber-backend
+    volumes:
+      - ./golang/src:/go/src/github.com/Di0niz/cyber-backend   
     ports:
-      - 8001:8080
+      - 8080:8080
 #    networks:
 #      vpcbr:
 #        ipv4_address: 192.168.101.200

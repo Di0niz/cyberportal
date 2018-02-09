@@ -1,4 +1,4 @@
-package main
+package github.com/Di0niz/cyber-backend
 
 import (
 	"net/http"
@@ -7,11 +7,6 @@ import (
 	"github.com/labstack/echo/middleware"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
-
-// переопределяем контекст для данных
-type CustomContext struct {
-	echo.Context
-}
 
 func main() {
 	// Echo instance
@@ -27,6 +22,7 @@ func main() {
 	})
 
 	e.GET("/metrics", promhttp.Handler())
+
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
